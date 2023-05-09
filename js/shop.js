@@ -107,29 +107,42 @@ var products = [
      // Using the "cartlist" array that contains all the items in the shopping cart, 
      // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
  
+     for (let i = 0; i < cartList.length; i++) {
+        if (cart.includes(cartList[i])) {
+            const product = cart.find((product) => product.id === cartList[i].id);
+            product.quantity += 1;
+            product.subtotal = product.quantity * product.price;
+        } else {
+            cart.push(cartList[i]);
+            const product = cart.find((product) => product.id === cartList[i].id);
+            product.quantity = 1;
+            product.subtotal = product.price;
+        }
+    }
+
+    //  cartList.sort((a, b) => a.id - b.id);
  
-     cartList.sort((a, b) => a.id - b.id);
- 
-     const productCount = {};
+    //  const productCount = {};
      
-     cartList.forEach(product => {
-         productCount[product.id] = (productCount[product.id] || 0) + 1;
-     });
+    //  cartList.forEach(product => {
+    //      productCount[product.id] = (productCount[product.id] || 0) + 1;
+    //  });
      
-         for (let i = 0; i < cartList.length; i++) {
+    //      for (let i = 0; i < cartList.length; i++) {
      
-             cartList[i].quantity = productCount[cartList[i].id];
+    //          cartList[i].quantity = productCount[cartList[i].id];
      
-             if (cartList[i + 1]){
-                 if (cartList[i].id !== cartList[i + 1].id) {
-                 cart.push(cartList[i])
-             }
-             } else  {
-                 cart.push(cartList[i])
-             }
-     }
-     return cart;
- }
+    //          if (cartList[i + 1]){
+    //              if (cartList[i].id !== cartList[i + 1].id) {
+    //              cart.push(cartList[i])
+    //          }
+    //          } else  {
+    //              cart.push(cartList[i])
+    //          }
+    //  }
+    //  return cart;
+}
+
  
  // Exercise 5
  function applyPromotionsCart() {
@@ -174,6 +187,7 @@ var products = [
  
      // fill the cart with selected products
      for (let i = 0; i < cart.length; i++) {
+
          // generate new rows
          let row = table.insertRow();
          let th = row.insertCell();
@@ -184,12 +198,10 @@ var products = [
          th.style.fontWeight = "bold";
          td1.innerHTML = cart[i].price;
          td2.innerHTML = cart[i].quantity;
-        //  td3.innerHTML = cart[i].total;
          td3.innerHTML = cart[i].subtotalWithDiscount || cart[i].subtotal;
  
          // calculate the total
-        //  finalTotal += cart[i].total;
-        finalTotal += cart[i].subtotalWithDiscount || cart[i].subtotal;
+         finalTotal += cart[i].subtotalWithDiscount || cart[i].subtotal;
      }
  
      // show the total in the cart (limit to only 2 decimals)
