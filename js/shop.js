@@ -109,30 +109,32 @@ var products = [
 
 
     // VERSION 3
-    const productAux = [];
-    cart = [];
+    // const productAux = [];
+    // cart = [];
 
-    for (let i = 0; i < cartList.length; i++) {
-        if (!productAux.includes(cartList[i].id)) {
-            productAux.push(cartList[i].id);
-            cart.push({ ...cartList[i], quantity: cartList.filter(p => p.id === cartList[i].id).length })
-        } 
-    }
+    // for (let i = 0; i < cartList.length; i++) {
+    //     if (!productAux.includes(cartList[i].id)) {
+    //         productAux.push(cartList[i].id);
+    //         cart.push({ ...cartList[i], quantity: cartList.filter(p => p.id === cartList[i].id).length })
+    //     } 
+    // }
     
  
     // VERSION 2
-    //  for (let i = 0; i < cartList.length; i++) {
-    //     if (cart.includes(cartList[i])) {
-    //         const product = cart.find((product) => product.id === cartList[i].id);
-    //         product.quantity += 1;
-    //         // product.subtotal = product.quantity * product.price;
-    //     } else {
-    //         cart.push(cartList[i]);
-    //         const product = cart.find((product) => product.id === cartList[i].id);
-    //         product.quantity = 1;
-    //         // product.subtotal = product.price;
-    //     }
-    // }
+    cart = [];
+    
+     for (let i = 0; i < cartList.length; i++) {
+        if (cart.includes(cartList[i])) {
+            const product = cart.find((product) => product.id === cartList[i].id);
+            product.quantity += 1;
+            product.subtotal = product.quantity * product.price;
+        } else {
+            cart.push(cartList[i]);
+            const product = cart.find((product) => product.id === cartList[i].id);
+            product.quantity = 1;
+            product.subtotal = product.price;
+        }
+    }
 
 
     // VERSION 1 
