@@ -106,20 +106,36 @@ var products = [
  function generateCart() {
      // Using the "cartlist" array that contains all the items in the shopping cart, 
      // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
- 
-     for (let i = 0; i < cartList.length; i++) {
-        if (cart.includes(cartList[i])) {
-            const product = cart.find((product) => product.id === cartList[i].id);
-            product.quantity += 1;
-            product.subtotal = product.quantity * product.price;
-        } else {
-            cart.push(cartList[i]);
-            const product = cart.find((product) => product.id === cartList[i].id);
-            product.quantity = 1;
-            product.subtotal = product.price;
-        }
-    }
 
+
+    // VERSION 3
+    const productAux = [];
+    cart = [];
+
+    for (let i = 0; i < cartList.length; i++) {
+        if (!productAux.includes(cartList[i].id)) {
+            productAux.push(cartList[i].id);
+            cart.push({ ...cartList[i], quantity: cartList.filter(p => p.id === cartList[i].id).length })
+        } 
+    }
+    
+ 
+    // VERSION 2
+    //  for (let i = 0; i < cartList.length; i++) {
+    //     if (cart.includes(cartList[i])) {
+    //         const product = cart.find((product) => product.id === cartList[i].id);
+    //         product.quantity += 1;
+    //         // product.subtotal = product.quantity * product.price;
+    //     } else {
+    //         cart.push(cartList[i]);
+    //         const product = cart.find((product) => product.id === cartList[i].id);
+    //         product.quantity = 1;
+    //         // product.subtotal = product.price;
+    //     }
+    // }
+
+
+    // VERSION 1 
     //  cartList.sort((a, b) => a.id - b.id);
  
     //  const productCount = {};
